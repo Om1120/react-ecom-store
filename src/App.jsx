@@ -4,198 +4,176 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-
-// Pages
-import Home from './pages/Home';
+import Categories from './pages/Home';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
-
 import NotFound from './pages/NotFound';
 
 function App() {
-  // Catalog states
+
+  let savedCart = localStorage.getItem('cart');
+  let startingCart = [];
+  if (savedCart) {
+    startingCart = JSON.parse(savedCart);
+  }
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [cartItems, setCartItems] = useState(startingCart);
 
-  // Cart state initialized from localStorage
-  const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem('cart');
-    // load saved items or fall back to empty list
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-
-  // Fetch catalog on application load
-  useEffect(() => {
+  useEffect(function() {
     axios.get('https://dummyjson.com/products?limit=0')
-      .then((res) => {
-        setProducts(res.data.products || []);
+      .then(function(res) {
+        setProducts(res.data.products);
         setLoading(false);
       })
-      .catch((err) => {
-        setError(err.message || 'Something went wrong while fetching products.');
+      .catch(function(err) {
+        setError('Something went wrong. Try again.');
         setLoading(false);
       });
   }, []);
 
-  // Save cart state changes to LocalStorage
-  useEffect(() => {
+  useEffect(function() {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Helper: Add product to cart
-  const addToCart = (product, quantity = 1) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+  function addToCart(product, qty) {
+    if (!qty) {
+      qty = 1;
+    }
 
-      if (existingItem) {
-        // Update item quantity
-        toast.success(`Updated ${product.title} quantity to ${existingItem.quantity + quantity}! 🛒`);
-        return prevItems.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+    let newCart = [];
+    let found = false;
+
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id === product.id) {
+        let updated = {
+          id: cartItems[i].id,
+          title: cartItems[i].title,
+          price: cartItems[i].price,
+          category: cartItems[i].category,
+          thumbnail: cartItems[i].thumbnail,
+          quantity: cartItems[i].quantity + qty
+        };
+        newCart.push(updated);
+        found = true;
+        toast.success(product.title + ' quantity updated! 🛒');
+      } else {
+        newCart.push(cartItems[i]);
       }
-
-      // Add as new item
-      toast.success(`${product.title} added to cart! 🛒`);
-      return [
-        ...prevItems,
-        {
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          category: product.category,
-          thumbnail: product.thumbnail,
-          quantity: quantity
-        }
-      ];
-    });
-  };
-
-  // Helper: Remove product from cart
-  const removeFromCart = (productId) => {
-    const itemToRemove = cartItems.find((item) => item.id === productId);
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
-    if (itemToRemove) {
-      toast.info(`${itemToRemove.title} removed from cart. 🗑️`);
     }
-  };
 
-  // Helper: Increase cart item quantity by 1
-  const increaseQuantity = (productId) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
-  };
+    if (!found) {
+      let newItem = {
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        category: product.category,
+        thumbnail: product.thumbnail,
+        quantity: qty
+      };
+      newCart.push(newItem);
+      toast.success(product.title + ' added to cart! 🛒');
+    }
 
-  // Helper: Decrease cart item quantity by 1 (minimum limit 1)
-  const decreaseQuantity = (productId) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
+    setCartItems(newCart);
+  }
 
-  // Helper: Empty the cart
-  const clearCart = (showNotification = true) => {
+  function removeFromCart(productId) {
+    let newCart = [];
+    let removedItem = null;
+
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id === productId) {
+        removedItem = cartItems[i];
+      } else {
+        newCart.push(cartItems[i]);
+      }
+    }
+
+    setCartItems(newCart);
+    if (removedItem) {
+      toast.info(removedItem.title + ' removed from cart 🗑️');
+    }
+  }
+
+  function increaseQuantity(productId) {
+    let newCart = [];
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id === productId) {
+        let item = cartItems[i];
+        item = {
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          category: item.category,
+          thumbnail: item.thumbnail,
+          quantity: item.quantity + 1
+        };
+        newCart.push(item);
+      } else {
+        newCart.push(cartItems[i]);
+      }
+    }
+    setCartItems(newCart);
+  }
+
+  function decreaseQuantity(productId) {
+    let newCart = [];
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id === productId && cartItems[i].quantity > 1) {
+        let item = cartItems[i];
+        item = {
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          category: item.category,
+          thumbnail: item.thumbnail,
+          quantity: item.quantity - 1
+        };
+        newCart.push(item);
+      } else {
+        newCart.push(cartItems[i]);
+      }
+    }
+    setCartItems(newCart);
+  }
+
+  function clearCart(showMsg) {
     setCartItems([]);
-    if (showNotification) {
-      toast.info('Shopping cart cleared! 🧹');
+    if (showMsg) {
+      toast.info('Cart cleared 🧹');
     }
-  };
+  }
 
-  // Calculate dynamic quantity count for navbar badge
-  const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  let totalCount = 0;
+  for (let i = 0; i < cartItems.length; i++) {
+    totalCount = totalCount + cartItems[i].quantity;
+  }
 
   return (
     <Router>
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        
-        {/* Navigation Bar */}
-        <Navbar cartCount={totalCartCount} />
-        
-        {/* Page Content Routes */}
+
+        <Navbar cartCount={totalCount} />
+
         <main style={{ flexGrow: 1, paddingBottom: '40px' }}>
           <Routes>
-            <Route 
-              path="/" 
-              element={
-                <Home 
-                  products={products} 
-                  loading={loading} 
-                  error={error} 
-                  onAddToCart={addToCart} 
-                />
-              } 
-            />
-            <Route 
-              path="/products" 
-              element={
-                <Products 
-                  products={products} 
-                  loading={loading} 
-                  error={error} 
-                  onAddToCart={addToCart} 
-                />
-              } 
-            />
-            <Route 
-              path="/products/:id" 
-              element={
-                <ProductDetails 
-                  products={products} 
-                  onAddToCart={addToCart} 
-                />
-              } 
-            />
-            <Route 
-              path="/cart" 
-              element={
-                <Cart 
-                  cartItems={cartItems} 
-                  onIncrease={increaseQuantity} 
-                  onDecrease={decreaseQuantity} 
-                  onRemove={removeFromCart} 
-                  onClearCart={clearCart} 
-                />
-              } 
-            />
-
-            
-            {/* 404 Fallback page */}
+            <Route path="/" element={<Categories />} />
+            <Route path="/products" element={<Products products={products} loading={loading} error={error} onAddToCart={addToCart} />} />
+            <Route path="/products/:id" element={<ProductDetails products={products} onAddToCart={addToCart} />} />
+            <Route path="/cart" element={<Cart cartItems={cartItems} onIncrease={increaseQuantity} onDecrease={decreaseQuantity} onRemove={removeFromCart} onClearCart={clearCart} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
 
-        {/* Footer */}
         <Footer />
-        
-        {/* Toast Notifications Box */}
-        <ToastContainer 
-          position="bottom-right" 
-          autoClose={3000} 
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+
+        <ToastContainer position="bottom-right" autoClose={3000} />
 
       </div>
     </Router>

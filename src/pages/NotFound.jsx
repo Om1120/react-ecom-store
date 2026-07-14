@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/NotFound.css';
 
+// this page shows when the user visits a URL that doesn't exist
 function NotFound() {
   return (
     <div className="container">
@@ -9,10 +10,10 @@ function NotFound() {
         <div className="notfound-code">404</div>
         <h2 className="notfound-title">Page Not Found</h2>
         <p className="notfound-desc">
-          Oops! The page you are looking for doesn't exist, has been removed, or is temporarily unavailable.
+          This page does not exist. Maybe you typed the wrong URL.
         </p>
         <Link to="/" className="notfound-home-btn">
-          Return to Homepage
+          Go Home
         </Link>
       </div>
     </div>

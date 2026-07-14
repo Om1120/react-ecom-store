@@ -1,98 +1,101 @@
 import React from 'react';
-import Hero from '../components/Hero';
-import Carousel from '../components/Carousel';
-import Category from '../components/Category';
-import ProductList from '../components/ProductList';
-import Newsletter from '../components/Newsletter';
-import Loading from '../components/Loading';
+import { useNavigate } from 'react-router-dom';
 import '../css/Home.css';
 
-function Home(props) {
-  const { products, loading, error, onAddToCart } = props;
+// list of all categories we want to show
+let categories = [
+  { name: "beauty", label: "Beauty & Makeup", icon: "fa-solid fa-wand-magic-sparkles" },
+  { name: "fragrances", label: "Fragrances", icon: "fa-solid fa-spray-can-sparkles" },
+  { name: "furniture", label: "Furniture", icon: "fa-solid fa-couch" },
+  { name: "groceries", label: "Groceries", icon: "fa-solid fa-basket-shopping" },
+  { name: "home-decoration", label: "Home Decoration", icon: "fa-solid fa-house" },
+  { name: "kitchen-accessories", label: "Kitchen", icon: "fa-solid fa-utensils" },
+  { name: "laptops", label: "Laptops & Tech", icon: "fa-solid fa-laptop" },
+  { name: "mens-shirts", label: "Men's Shirts", icon: "fa-solid fa-shirt" },
+  { name: "mens-shoes", label: "Men's Shoes", icon: "fa-solid fa-shoe-prints" },
+  { name: "mens-watches", label: "Men's Watches", icon: "fa-solid fa-clock" },
+  { name: "mobile-accessories", label: "Mobile Accessories", icon: "fa-solid fa-plug" },
+  { name: "motorcycle", label: "Motorcycles", icon: "fa-solid fa-motorcycle" },
+  { name: "skin-care", label: "Skin Care", icon: "fa-solid fa-face-smile" },
+  { name: "smartphones", label: "Smartphones", icon: "fa-solid fa-mobile-screen-button" },
+  { name: "sports-accessories", label: "Sports", icon: "fa-solid fa-dumbbell" },
+  { name: "sunglasses", label: "Sunglasses", icon: "fa-solid fa-glasses" },
+  { name: "tablets", label: "Tablets", icon: "fa-solid fa-tablet-screen-button" },
+  { name: "tops", label: "Women Tops", icon: "fa-solid fa-person-dress" },
+  { name: "vehicle", label: "Vehicles", icon: "fa-solid fa-car" },
+  { name: "womens-bags", label: "Women's Bags", icon: "fa-solid fa-bag-shopping" },
+  { name: "womens-dresses", label: "Women's Dresses", icon: "fa-solid fa-vest" },
+  { name: "womens-jewellery", label: "Jewellery", icon: "fa-solid fa-gem" },
+  { name: "womens-shoes", label: "Women's Shoes", icon: "fa-solid fa-shoe-prints" },
+  { name: "womens-watches", label: "Women's Watches", icon: "fa-solid fa-stopwatch" },
+];
 
-  // Render loading state if API call is in progress
-  if (loading) {
-    return (
-      <div className="container">
-        <Loading />
-      </div>
-    );
+function Categories() {
+
+  // useNavigate lets us go to another page in code
+  const navigate = useNavigate();
+
+  // go to products page and filter by the clicked category
+  function goToCategory(name) {
+    navigate('/products?category=' + name);
   }
 
-  // Render error message if API fails
-  if (error) {
-    return (
-      <div className="container" style={{ margin: '40px auto', textAlign: 'center' }}>
-        <div className="error-view">
-          <h3>Failed to Load Products</h3>
-          <p>{error}</p>
-        </div>
-      </div>
-    );
+  // go to products page with no filter (show everything)
+  function goToAll() {
+    navigate('/products');
   }
-
-  // Slice products for Home page displays (first 4 for Featured, next 4 for Latest)
-  const featuredProducts = products.slice(0, 4);
-  const latestProducts = products.slice(4, 8);
 
   return (
     <div className="container">
-      {/* Hero Section */}
-      <Hero />
 
-      {/* Categories Section */}
-      <div className="section-title-wrapper">
-        <h2>Shop by Category</h2>
-      </div>
-      <Category />
-
-      {/* Carousel Banner */}
-      <Carousel />
-
-      {/* Featured Products */}
-      <div className="section-title-wrapper">
-        <h2>Featured Products</h2>
-      </div>
-      <ProductList products={featuredProducts} onAddToCart={onAddToCart} />
-
-      {/* Special Offer Banner */}
-      <div className="special-offer-wrapper">
-        <div className="offer-content">
-          <span className="offer-badge">Mega Sale</span>
-          <h2 className="offer-title">Summer Clearance Sale! Up to 50% Off</h2>
-          <p className="offer-desc">
-            Grab our highest rated gadgets, skin essentials, and accessories at unbelievable prices. Free delivery on orders over $50.
-          </p>
-          <div className="offer-countdown">
-            <div className="countdown-box">
-              <span className="countdown-time">02</span>
-              <span className="countdown-label">Days</span>
-            </div>
-            <div className="countdown-box">
-              <span className="countdown-time">14</span>
-              <span className="countdown-label">Hrs</span>
-            </div>
-            <div className="countdown-box">
-              <span className="countdown-time">45</span>
-              <span className="countdown-label">Mins</span>
-            </div>
-          </div>
-        </div>
-        <button className="offer-btn" onClick={() => window.scrollTo(0, 400)}>
-          Shop Now <i className="fa-solid fa-arrow-right"></i>
-        </button>
+      <div style={{ margin: '20px 0 30px 0' }}>
+        <h1 style={{ fontSize: '28px', fontWeight: '800', color: '#1e293b', marginBottom: '8px' }}>
+          Shop by Category
+        </h1>
+        <p style={{ color: '#64748b', fontSize: '15px' }}>
+          Pick a category to see products.
+        </p>
       </div>
 
-      {/* Latest Products */}
-      <div className="section-title-wrapper">
-        <h2>Latest Additions</h2>
-      </div>
-      <ProductList products={latestProducts} onAddToCart={onAddToCart} />
+      {/* button to show all products */}
+      <button
+        onClick={goToAll}
+        style={{
+          backgroundColor: '#4f46e5',
+          color: '#ffffff',
+          padding: '12px 28px',
+          border: 'none',
+          borderRadius: '8px',
+          fontSize: '15px',
+          fontWeight: '700',
+          cursor: 'pointer',
+          marginBottom: '30px'
+        }}
+      >
+        <i className="fa-solid fa-border-all" style={{ marginRight: '8px' }}></i>
+        View All Products
+      </button>
 
-      {/* Newsletter Section */}
-      <Newsletter />
+      {/* loop through categories and make a button for each one */}
+      <div className="categories-container">
+        {categories.map(function(cat) {
+          return (
+            <button
+              key={cat.name}
+              onClick={function() { goToCategory(cat.name); }}
+              className="category-card"
+            >
+              <div className="category-icon">
+                <i className={cat.icon}></i>
+              </div>
+              <div className="category-name">{cat.label}</div>
+            </button>
+          );
+        })}
+      </div>
+
     </div>
   );
 }
 
-export default Home;
+export default Categories;

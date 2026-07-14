@@ -3,82 +3,92 @@ import { NavLink, Link } from 'react-router-dom';
 import '../css/Navbar.css';
 
 function Navbar(props) {
-  const { cartCount } = props;
-  
-  // Track window width in JS instead of CSS media queries
+
+  // true if screen is small (phone), false if big (computer)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // true if the mobile menu is open
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const mobileView = window.innerWidth < 768;
-      setIsMobile(mobileView);
-      if (!mobileView) {
-        setIsOpen(false); // Close drawer if resizing to desktop
+  // this runs once when page loads - it watches if user resizes window
+  useEffect(function() {
+    function checkSize() {
+      if (window.innerWidth < 768) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+        setIsOpen(false); // close menu if window gets big
       }
+    }
+    window.addEventListener('resize', checkSize);
+
+    // cleanup - stop watching when component is removed
+    return function() {
+      window.removeEventListener('resize', checkSize);
     };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  // open or close the menu
+  function toggleMenu() {
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  }
 
-  const closeMenu = () => {
+  // close the menu (used when clicking a link)
+  function closeMenu() {
     setIsOpen(false);
-  };
+  }
 
   return (
     <nav className="navbar-wrapper">
       <div className="navbar-container">
-        
-        {/* Logo */}
+
+        {/* website logo - clicking goes home */}
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
           E<span>com</span>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        {!isMobile && (
+        {/* show desktop links only on big screens */}
+        {isMobile === false &&
           <ul className="navbar-links">
             <li>
-              <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
+              <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>Categories</NavLink>
             </li>
             <li>
               <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Products</NavLink>
             </li>
-
           </ul>
-        )}
+        }
 
-        {/* Action icons (Cart & Toggler) */}
         <div className="navbar-actions">
-          <Link to="/cart" className="cart-icon-btn" onClick={closeMenu} aria-label="Cart link">
+
+          {/* cart icon - shows red number if there are items */}
+          <Link to="/cart" className="cart-icon-btn" onClick={closeMenu}>
             <i className="fa-solid fa-cart-shopping"></i>
-            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            {props.cartCount > 0 &&
+              <span className="cart-badge">{props.cartCount}</span>
+            }
           </Link>
 
-          {/* Hamburger button visible only on mobile width */}
-          {isMobile && (
-            <button 
-              onClick={toggleMenu} 
-              className={`menu-toggle-btn ${isOpen ? 'open' : ''}`}
-              aria-label="Toggle menu"
-            >
+          {/* hamburger button only on mobile */}
+          {isMobile === true &&
+            <button onClick={toggleMenu} className={'menu-toggle-btn ' + (isOpen ? 'open' : '')}>
               <span></span>
               <span></span>
               <span></span>
             </button>
-          )}
+          }
         </div>
 
-        {/* Mobile Navigation Drawer Overlay */}
-        {isMobile && (
-          <ul className={`mobile-nav-menu ${isOpen ? 'open' : ''}`}>
+        {/* dropdown menu for mobile */}
+        {isMobile === true &&
+          <ul className={'mobile-nav-menu ' + (isOpen ? 'open' : '')}>
             <li>
               <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
-                Home
+                Categories
               </NavLink>
             </li>
             <li>
@@ -86,9 +96,8 @@ function Navbar(props) {
                 Products
               </NavLink>
             </li>
-
           </ul>
-        )}
+        }
 
       </div>
     </nav>

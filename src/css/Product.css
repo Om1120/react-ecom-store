@@ -1,19 +1,22 @@
-/* Products Page & Product Card Stylesheet */
+/* Products Page and Product Card Styles */
 
-/* --- Filters & Search Controls Area --- */
+
+/* ===== SEARCH AND FILTER BOX ===== */
+/* The white box at top with search bar and filters */
+
 .controls-wrapper {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   padding: 24px;
   margin-bottom: 30px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Search Bar Component */
+/* Search bar area */
 .search-container {
   display: flex;
   align-items: center;
@@ -21,75 +24,90 @@
   width: 100%;
 }
 
+/* The text input for searching */
 .search-input {
   width: 100%;
   padding: 12px 18px 12px 48px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background-color: var(--bg-app);
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: #f8fafc;
+  font-size: 15px;
 }
 
 .search-input:focus {
-  border-color: var(--primary);
+  border-color: #4f46e5;
   background-color: #ffffff;
 }
 
+/* The magnifier icon inside search box */
 .search-icon {
   position: absolute;
   left: 16px;
-  color: var(--text-muted);
+  color: #64748b;
   font-size: 18px;
 }
 
+/* The X button to clear search */
 .search-clear-btn {
   position: absolute;
   right: 16px;
-  color: var(--text-muted);
+  color: #64748b;
 }
 
-/* Category Filter Chips Component */
+
+/* ===== CATEGORY FILTER CHIPS ===== */
+/* The clickable buttons like "All", "Electronics", etc. */
+
 .filter-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* "Filter by:" label */
 .filter-label {
   font-size: 14px;
   font-weight: 700;
-  color: var(--text-main);
+  color: #1e293b;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
+/* Row of filter buttons */
 .filter-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
+/* Each filter button (like a pill/tag) */
 .filter-chip {
   padding: 8px 16px;
-  background-color: var(--bg-app);
-  border: 1px solid var(--border);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 50px;
   font-size: 13px;
   font-weight: 500;
   text-transform: capitalize;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .filter-chip:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: #4f46e5;
+  color: #4f46e5;
 }
 
+/* The selected/active filter chip */
 .filter-chip.active {
-  background-color: var(--primary);
+  background-color: #4f46e5;
   color: #ffffff;
-  border-color: var(--primary);
+  border-color: #4f46e5;
 }
 
-/* Sort Select Panel */
+
+/* ===== SORT CONTROLS ===== */
+/* Results count and sort dropdowns */
+
 .sort-container {
   display: flex;
   flex-wrap: wrap;
@@ -98,9 +116,10 @@
   gap: 15px;
 }
 
+/* Shows "Showing 20 products" text */
 .results-count {
   font-size: 14px;
-  color: var(--text-muted);
+  color: #64748b;
 }
 
 .sort-selects {
@@ -118,19 +137,22 @@
 .sort-select-label {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-muted);
+  color: #64748b;
 }
 
+/* Dropdown select input */
 .sort-select {
   padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background-color: var(--bg-card);
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
   font-size: 13px;
 }
 
 
-/* --- Product Responsive Grid --- */
+/* ===== PRODUCT GRID ===== */
+/* The grid of product cards */
+
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -139,30 +161,34 @@
 }
 
 
-/* --- Product Card Component --- */
+/* ===== PRODUCT CARD ===== */
+/* Each individual product box */
+
 .product-card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
+/* Lift effect on hover */
 .product-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   border-color: #cbd5e1;
 }
 
+/* Small label like "electronics" in corner of card */
 .card-badge {
   position: absolute;
   top: 12px;
   left: 12px;
-  background-color: var(--secondary);
+  background-color: #06b6d4;
   color: #ffffff;
   font-size: 11px;
   font-weight: 700;
@@ -172,26 +198,29 @@
   z-index: 2;
 }
 
+/* The product image area */
 .card-img-link {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
   background-color: #f8fafc;
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .card-img-link img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: var(--transition);
+  transition: transform 0.3s;
 }
 
+/* Zoom image slightly on hover */
 .product-card:hover .card-img-link img {
   transform: scale(1.06);
 }
 
+/* The white area below the image with title and price */
 .card-details {
   padding: 20px;
   display: flex;
@@ -199,28 +228,28 @@
   flex-grow: 1;
 }
 
+/* Star rating and count */
 .card-rating-badge {
   font-size: 12px;
-  color: var(--accent);
+  color: #f59e0b;
   margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
+/* Product name */
 .card-title {
   font-size: 16px;
   font-weight: 700;
-  color: var(--text-main);
+  color: #1e293b;
   margin-bottom: 8px;
   line-height: 1.4;
-  height: 44px; /* Fix height for alignment */
+  height: 44px;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
+/* Price row at the bottom of card */
 .card-price-row {
   display: flex;
   justify-content: space-between;
@@ -229,15 +258,17 @@
   padding-top: 12px;
 }
 
+/* Price like "$29.99" */
 .card-price {
   font-size: 18px;
   font-weight: 800;
-  color: var(--primary);
+  color: #4f46e5;
 }
 
+/* The + button to add to cart */
 .card-add-btn {
-  background-color: var(--bg-app);
-  color: var(--text-main);
+  background-color: #f8fafc;
+  color: #1e293b;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -245,44 +276,54 @@
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
 }
 
 .card-add-btn:hover {
-  background-color: var(--primary);
+  background-color: #4f46e5;
   color: #ffffff;
-  border-color: var(--primary);
+  border-color: #4f46e5;
   transform: rotate(90deg);
 }
 
-/* Error and empty view styles */
-.error-view, .empty-view {
+
+/* ===== ERROR AND EMPTY MESSAGES ===== */
+
+.error-view,
+.empty-view {
   text-align: center;
   padding: 60px 20px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
 }
 
-.error-view h3, .empty-view h3 {
+.error-view h3,
+.empty-view h3 {
   font-size: 20px;
   margin-bottom: 12px;
-  color: var(--danger);
+  color: #ef4444;
 }
 
-.error-view p, .empty-view p {
-  color: var(--text-muted);
+.error-view p,
+.empty-view p {
+  color: #64748b;
   margin-bottom: 24px;
 }
 
-.retry-btn, .shop-btn {
-  background-color: var(--primary);
+/* Retry and Shop buttons */
+.retry-btn,
+.shop-btn {
+  background-color: #4f46e5;
   color: #ffffff;
   padding: 10px 24px;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
   font-weight: 600;
+  transition: background-color 0.2s;
 }
 
-.retry-btn:hover, .shop-btn:hover {
-  background-color: var(--primary-hover);
+.retry-btn:hover,
+.shop-btn:hover {
+  background-color: #4338ca;
 }

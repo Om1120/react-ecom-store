@@ -1,43 +1,50 @@
-/* Product Details Page Stylesheet */
+/* Product Details Page Styles */
+/* This is the page you see when you click on a single product */
+
+
+/* ===== MAIN PRODUCT LAYOUT ===== */
+/* Image on left, product info on right */
 
 .details-container {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
   padding: 40px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   margin-bottom: 50px;
 }
 
-/* Image Showcase Column */
+/* Left side - the product image box */
 .details-image-col {
   flex: 1 1 400px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f8fafc;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  aspect-ratio: 1.1 / 1;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
   overflow: hidden;
   padding: 20px;
+  /* Keep it square shape */
+  aspect-ratio: 1.1 / 1;
 }
 
 .details-image-col img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transition: var(--transition);
+  transition: transform 0.3s;
 }
 
+/* Zoom image when hovering */
 .details-image-col:hover img {
   transform: scale(1.05);
 }
 
-/* Info Details Column */
+/* Right side - product name, price, description */
 .details-info-col {
   flex: 1 1 400px;
   display: flex;
@@ -45,35 +52,38 @@
   justify-content: center;
 }
 
+/* Small category label like "ELECTRONICS" */
 .details-category {
   display: inline-block;
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--secondary);
+  color: #06b6d4;
   margin-bottom: 12px;
-  letter-spacing: 0.5px;
 }
 
+/* Main product title */
 .details-title {
-  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-size: 2rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #1e293b;
   line-height: 1.3;
   margin-bottom: 16px;
 }
 
+/* Row with star rating and stock status */
 .details-meta-row {
   display: flex;
   align-items: center;
   gap: 20px;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #e2e8f0;
 }
 
+/* Star rating like "⭐ 4.5 (120 reviews)" */
 .details-rating {
-  color: var(--accent);
+  color: #f59e0b;
   font-size: 14px;
   font-weight: 600;
   display: flex;
@@ -81,6 +91,7 @@
   gap: 5px;
 }
 
+/* "In Stock" or "Low Stock" badge */
 .details-stock {
   font-size: 13px;
   font-weight: 600;
@@ -88,31 +99,37 @@
   border-radius: 4px;
 }
 
+/* Green "In Stock" badge */
 .details-stock.in-stock {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: var(--success);
+  background-color: #d1fae5;
+  color: #10b981;
 }
 
+/* Yellow "Low Stock" badge */
 .details-stock.low-stock {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: var(--accent);
+  background-color: #fef3c7;
+  color: #f59e0b;
 }
 
+/* The price like "$29.99" */
 .details-price {
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-size: 2.2rem;
   font-weight: 800;
-  color: var(--primary);
+  color: #4f46e5;
   margin-bottom: 20px;
 }
 
+/* Product description text */
 .details-desc {
   font-size: 15px;
-  color: var(--text-muted);
+  color: #64748b;
   line-height: 1.7;
   margin-bottom: 30px;
 }
 
-/* Quantity Selection Area */
+
+/* ===== QUANTITY + ADD TO CART ROW ===== */
+
 .details-action-row {
   display: flex;
   flex-wrap: wrap;
@@ -121,16 +138,18 @@
   margin-top: auto;
 }
 
+/* The - 1 + quantity box */
 .quantity-selector {
   display: flex;
   align-items: center;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background-color: var(--bg-app);
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: #f8fafc;
   overflow: hidden;
   height: 48px;
 }
 
+/* The minus and plus buttons */
 .qty-btn {
   width: 44px;
   height: 100%;
@@ -140,12 +159,14 @@
   font-size: 16px;
   font-weight: 700;
   background-color: transparent;
+  transition: background-color 0.2s;
 }
 
 .qty-btn:hover {
-  background-color: var(--border);
+  background-color: #e2e8f0;
 }
 
+/* The number in the middle */
 .qty-value {
   width: 44px;
   height: 100%;
@@ -155,40 +176,43 @@
   font-weight: 700;
   font-size: 15px;
   background-color: #ffffff;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
 }
 
+/* "Add to Cart" button */
 .add-to-cart-btn {
-  background-color: var(--primary);
+  background-color: #4f46e5;
   color: #ffffff;
   padding: 0 32px;
   height: 48px;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   flex-grow: 1;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .add-to-cart-btn:hover {
-  background-color: var(--primary-hover);
+  background-color: #4338ca;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
 }
 
-/* Related Products Header */
+
+/* ===== RELATED PRODUCTS SECTION ===== */
+
 .related-header {
   margin-top: 60px;
   margin-bottom: 24px;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 2px solid #e2e8f0;
   padding-bottom: 12px;
 }
 
 .related-header h3 {
   font-size: 22px;
   font-weight: 700;
+  color: #1e293b;
 }

@@ -1,5 +1,7 @@
-/* NotFound 404 Page Stylesheet */
+/* 404 Not Found Page Styles */
+/* This page shows when someone visits a URL that doesn't exist */
 
+/* Center everything on the page */
 .notfound-container {
   display: flex;
   flex-direction: column;
@@ -7,49 +9,52 @@
   justify-content: center;
   text-align: center;
   padding: 80px 20px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   margin: 40px auto;
   max-width: 600px;
 }
 
+/* The big "404" number */
 .notfound-code {
-  font-size: clamp(5rem, 15vw, 8rem);
+  font-size: 7rem;
   font-weight: 900;
-  color: var(--primary);
+  color: #4f46e5;
   line-height: 1;
-  letter-spacing: -2px;
   margin-bottom: 12px;
-  text-shadow: 0 4px 10px rgba(79, 70, 229, 0.1);
 }
 
+/* "Page Not Found" heading */
 .notfound-title {
   font-size: 24px;
   font-weight: 800;
-  color: var(--text-main);
+  color: #1e293b;
   margin-bottom: 12px;
 }
 
+/* Short description text */
 .notfound-desc {
   font-size: 15px;
-  color: var(--text-muted);
+  color: #64748b;
   max-width: 420px;
   line-height: 1.6;
   margin-bottom: 30px;
 }
 
+/* "Go Home" button */
 .notfound-home-btn {
-  background-color: var(--primary);
+  background-color: #4f46e5;
   color: #ffffff;
   padding: 12px 28px;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
   font-weight: 600;
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.15);
+  display: inline-block;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .notfound-home-btn:hover {
-  background-color: var(--primary-hover);
+  background-color: #4338ca;
   transform: translateY(-2px);
 }
