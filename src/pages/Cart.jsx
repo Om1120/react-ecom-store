@@ -4,16 +4,14 @@ import { toast } from 'react-toastify';
 import CartItem from '../components/CartItem';
 import '../css/Cart.css';
 
-function Cart(props) {
-
-  // this runs when user clicks the checkout button
-  function checkout() {
+const Cart = ({ cartItems, onIncrease, onDecrease, onRemove, onClearCart }) => {
+  
+  const checkout = () => {
     toast.success('Order placed! Thanks for shopping 🎉');
-    props.onClearCart(false); // clear the cart but don't show another toast
-  }
+    onClearCart(false);
+  };
 
-  // if cart has no items, show the empty screen
-  if (props.cartItems.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="container">
         <div className="cart-empty-container">
@@ -32,41 +30,47 @@ function Cart(props) {
     );
   }
 
-  // cart has items, show them
+  // Calculate cart total price
+  const cartTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
   return (
     <div className="container">
-
       <div style={{ margin: '20px 0 30px 0' }}>
         <h1>Shopping Cart</h1>
         <p>Check your items below.</p>
       </div>
 
       <div className="cart-layout">
-
-        {/* left side - list of all cart items */}
+        
+        {/* Left side - list of all cart items */}
         <div className="cart-items-column">
-          {props.cartItems.map(function(item) {
-            return (
-              <CartItem
-                key={item.id}
-                item={item}
-                onIncrease={props.onIncrease}
-                onDecrease={props.onDecrease}
-                onRemove={props.onRemove}
-              />
-            );
-          })}
+          {cartItems.map(item => (
+            <CartItem
+              key={item.id}
+              item={item}
+              onIncrease={onIncrease}
+              onDecrease={onDecrease}
+              onRemove={onRemove}
+            />
+          ))}
         </div>
 
-        {/* right side - checkout buttons */}
+        {/* Right side - checkout details & buttons */}
         <div className="cart-summary-column">
           <h2 className="summary-title">Order Summary</h2>
+
+          <div className="summary-row total" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+            <span>Total Amount:</span>
+            <span className="total-price" style={{ fontWeight: '800', color: '#4f46e5' }}>
+              ${cartTotal.toFixed(2)}
+            </span>
+          </div>
 
           <button onClick={checkout} className="checkout-btn">
             Checkout <i className="fa-solid fa-credit-card"></i>
           </button>
 
-          <button onClick={function() { props.onClearCart(true); }} className="clear-cart-btn">
+          <button onClick={() => onClearCart(true)} className="clear-cart-btn">
             <i className="fa-solid fa-trash-can"></i> Clear Cart
           </button>
         </div>
@@ -74,6 +78,6 @@ function Cart(props) {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

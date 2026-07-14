@@ -2,10 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Cart.css';
 
-function CartItem(props) {
-
-  let item = props.item;
-
+const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
   return (
     <div className="cart-item-card">
 
@@ -24,34 +21,18 @@ function CartItem(props) {
         <div className="cart-item-price">${item.price}</div>
 
         <div className="quantity-selector">
-          <button
-            onClick={function() { props.onDecrease(item.id); }}
-            className="qty-btn"
-          >
-            −
-          </button>
-          <div className="qty-value">
-            {item.quantity}
-          </div>
-          <button
-            onClick={function() { props.onIncrease(item.id); }}
-            className="qty-btn"
-          >
-            +
-          </button>
+          <button onClick={() => onDecrease(item.id)} className="qty-btn">−</button>
+          <div className="qty-value">{item.quantity}</div>
+          <button onClick={() => onIncrease(item.id)} className="qty-btn">+</button>
         </div>
       </div>
 
-      <button
-        onClick={function() { props.onRemove(item.id); }}
-        className="cart-item-remove-btn"
-        title="Remove"
-      >
+      <button onClick={() => onRemove(item.id)} className="cart-item-remove-btn" title="Remove">
         <i className="fa-solid fa-trash-can"></i>
       </button>
 
     </div>
   );
-}
+};
 
 export default CartItem;

@@ -4,16 +4,11 @@ import ProductList from '../components/ProductList';
 import Loading from '../components/Loading';
 import '../css/Product.css';
 
-function Products(props) {
-
+const Products = ({ products, loading, error, onAddToCart }) => {
   const [searchParams] = useSearchParams();
+  const category = searchParams.get('category') || 'all';
 
-  let category = searchParams.get('category');
-  if (!category) {
-    category = 'all';
-  }
-
-  if (props.loading) {
+  if (loading) {
     return (
       <div className="container">
         <Loading />
@@ -21,49 +16,41 @@ function Products(props) {
     );
   }
 
-  if (props.error) {
+  if (error) {
     return (
       <div className="container" style={{ textAlign: 'center', margin: '40px auto' }}>
         <div className="error-view">
           <h3>Failed to load products</h3>
-          <p>{props.error}</p>
+          <p>{error}</p>
         </div>
       </div>
     );
   }
 
-  let list = [];
-  for (let i = 0; i < props.products.length; i++) {
-    let p = props.products[i];
-    if (category === 'all') {
-      list.push(p);
-    } else if (p.category === category) {
-      list.push(p);
-    }
-  }
+  // Filter products by category (simple filter method instead of verbose loop)
+  const filteredList = category === 'all'
+    ? products
+    : products.filter(p => p.category === category);
 
-  let title = 'All Products';
-  if (category !== 'all') {
-    title = category.replace(/-/g, ' ');
-    title = title.charAt(0).toUpperCase() + title.slice(1);
-  }
+  // Simple title generator
+  const title = category === 'all'
+    ? 'All Products'
+    : category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
   return (
     <div className="container">
-
       <div style={{ margin: '20px 0 30px 0' }}>
         <h1 style={{ fontSize: '26px', fontWeight: '800', color: '#1e293b', marginBottom: '6px' }}>
           {title}
         </h1>
         <p style={{ color: '#64748b', fontSize: '15px' }}>
-          {list.length} products found
+          {filteredList.length} products found
         </p>
       </div>
 
-      <ProductList products={list} onAddToCart={props.onAddToCart} />
-
+      <ProductList products={filteredList} onAddToCart={onAddToCart} />
     </div>
   );
-}
+};
 
 export default Products;

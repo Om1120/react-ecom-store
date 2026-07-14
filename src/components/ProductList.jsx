@@ -2,9 +2,8 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import '../css/Product.css';
 
-function ProductList(props) {
-
-  if (props.products.length === 0) {
+const ProductList = ({ products, onAddToCart }) => {
+  if (products.length === 0) {
     return (
       <div className="empty-view">
         <h3>No Products Found</h3>
@@ -15,13 +14,11 @@ function ProductList(props) {
 
   return (
     <div className="products-grid">
-      {props.products.map(function(item) {
-        return (
-          <ProductCard key={item.id} product={item} onAddToCart={props.onAddToCart} />
-        );
-      })}
+      {products.map(item => (
+        <ProductCard key={item.id} product={item} onAddToCart={onAddToCart} />
+      ))}
     </div>
   );
-}
+};
 
 export default ProductList;

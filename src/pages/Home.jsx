@@ -2,52 +2,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Home.css';
 
-// list of all categories we want to show
-let categories = [
-  { name: "beauty", label: "Beauty & Makeup", icon: "fa-solid fa-wand-magic-sparkles" },
-  { name: "fragrances", label: "Fragrances", icon: "fa-solid fa-spray-can-sparkles" },
-  { name: "furniture", label: "Furniture", icon: "fa-solid fa-couch" },
-  { name: "groceries", label: "Groceries", icon: "fa-solid fa-basket-shopping" },
-  { name: "home-decoration", label: "Home Decoration", icon: "fa-solid fa-house" },
-  { name: "kitchen-accessories", label: "Kitchen", icon: "fa-solid fa-utensils" },
-  { name: "laptops", label: "Laptops & Tech", icon: "fa-solid fa-laptop" },
-  { name: "mens-shirts", label: "Men's Shirts", icon: "fa-solid fa-shirt" },
-  { name: "mens-shoes", label: "Men's Shoes", icon: "fa-solid fa-shoe-prints" },
-  { name: "mens-watches", label: "Men's Watches", icon: "fa-solid fa-clock" },
-  { name: "mobile-accessories", label: "Mobile Accessories", icon: "fa-solid fa-plug" },
-  { name: "motorcycle", label: "Motorcycles", icon: "fa-solid fa-motorcycle" },
-  { name: "skin-care", label: "Skin Care", icon: "fa-solid fa-face-smile" },
-  { name: "smartphones", label: "Smartphones", icon: "fa-solid fa-mobile-screen-button" },
-  { name: "sports-accessories", label: "Sports", icon: "fa-solid fa-dumbbell" },
-  { name: "sunglasses", label: "Sunglasses", icon: "fa-solid fa-glasses" },
-  { name: "tablets", label: "Tablets", icon: "fa-solid fa-tablet-screen-button" },
-  { name: "tops", label: "Women Tops", icon: "fa-solid fa-person-dress" },
-  { name: "vehicle", label: "Vehicles", icon: "fa-solid fa-car" },
-  { name: "womens-bags", label: "Women's Bags", icon: "fa-solid fa-bag-shopping" },
-  { name: "womens-dresses", label: "Women's Dresses", icon: "fa-solid fa-vest" },
-  { name: "womens-jewellery", label: "Jewellery", icon: "fa-solid fa-gem" },
-  { name: "womens-shoes", label: "Women's Shoes", icon: "fa-solid fa-shoe-prints" },
-  { name: "womens-watches", label: "Women's Watches", icon: "fa-solid fa-stopwatch" },
-];
-
-function Categories() {
-
-  // useNavigate lets us go to another page in code
+const Categories = () => {
   const navigate = useNavigate();
 
-  // go to products page and filter by the clicked category
-  function goToCategory(name) {
+  const goToCategory = (name) => {
     navigate('/products?category=' + name);
-  }
+  };
 
-  // go to products page with no filter (show everything)
-  function goToAll() {
+  const goToAll = () => {
     navigate('/products');
-  }
+  };
 
   return (
     <div className="container">
-
       <div style={{ margin: '20px 0 30px 0' }}>
         <h1 style={{ fontSize: '28px', fontWeight: '800', color: '#1e293b', marginBottom: '8px' }}>
           Shop by Category
@@ -57,7 +24,6 @@ function Categories() {
         </p>
       </div>
 
-      {/* button to show all products */}
       <button
         onClick={goToAll}
         style={{
@@ -76,26 +42,132 @@ function Categories() {
         View All Products
       </button>
 
-      {/* loop through categories and make a button for each one */}
+      {/* Written static categories layout - easy to edit, add, or change by hand */}
       <div className="categories-container">
-        {categories.map(function(cat) {
-          return (
-            <button
-              key={cat.name}
-              onClick={function() { goToCategory(cat.name); }}
-              className="category-card"
-            >
-              <div className="category-icon">
-                <i className={cat.icon}></i>
-              </div>
-              <div className="category-name">{cat.label}</div>
-            </button>
-          );
-        })}
-      </div>
+        
+        <button onClick={() => goToCategory('beauty')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-wand-magic-sparkles"></i></div>
+          <div className="category-name">Beauty & Makeup</div>
+        </button>
 
+        <button onClick={() => goToCategory('fragrances')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-spray-can-sparkles"></i></div>
+          <div className="category-name">Fragrances</div>
+        </button>
+
+        <button onClick={() => goToCategory('furniture')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-couch"></i></div>
+          <div className="category-name">Furniture</div>
+        </button>
+
+        <button onClick={() => goToCategory('groceries')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-basket-shopping"></i></div>
+          <div className="category-name">Groceries</div>
+        </button>
+
+        <button onClick={() => goToCategory('home-decoration')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-house"></i></div>
+          <div className="category-name">Home Decoration</div>
+        </button>
+
+        <button onClick={() => goToCategory('kitchen-accessories')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-utensils"></i></div>
+          <div className="category-name">Kitchen</div>
+        </button>
+
+        <button onClick={() => goToCategory('laptops')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-laptop"></i></div>
+          <div className="category-name">Laptops & Tech</div>
+        </button>
+
+        <button onClick={() => goToCategory('mens-shirts')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-shirt"></i></div>
+          <div className="category-name">Men's Shirts</div>
+        </button>
+
+        <button onClick={() => goToCategory('mens-shoes')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-shoe-prints"></i></div>
+          <div className="category-name">Men's Shoes</div>
+        </button>
+
+        <button onClick={() => goToCategory('mens-watches')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-clock"></i></div>
+          <div className="category-name">Men's Watches</div>
+        </button>
+
+        <button onClick={() => goToCategory('mobile-accessories')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-plug"></i></div>
+          <div className="category-name">Mobile Accessories</div>
+        </button>
+
+        <button onClick={() => goToCategory('motorcycle')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-motorcycle"></i></div>
+          <div className="category-name">Motorcycles</div>
+        </button>
+
+        <button onClick={() => goToCategory('skin-care')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-face-smile"></i></div>
+          <div className="category-name">Skin Care</div>
+        </button>
+
+        <button onClick={() => goToCategory('smartphones')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-mobile-screen-button"></i></div>
+          <div className="category-name">Smartphones</div>
+        </button>
+
+        <button onClick={() => goToCategory('sports-accessories')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-dumbbell"></i></div>
+          <div className="category-name">Sports</div>
+        </button>
+
+        <button onClick={() => goToCategory('sunglasses')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-glasses"></i></div>
+          <div className="category-name">Sunglasses</div>
+        </button>
+
+        <button onClick={() => goToCategory('tablets')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-tablet-screen-button"></i></div>
+          <div className="category-name">Tablets</div>
+        </button>
+
+        <button onClick={() => goToCategory('tops')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-person-dress"></i></div>
+          <div className="category-name">Women Tops</div>
+        </button>
+
+        <button onClick={() => goToCategory('vehicle')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-car"></i></div>
+          <div className="category-name">Vehicles</div>
+        </button>
+
+        <button onClick={() => goToCategory('womens-bags')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-bag-shopping"></i></div>
+          <div className="category-name">Women's Bags</div>
+        </button>
+
+        <button onClick={() => goToCategory('womens-dresses')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-vest"></i></div>
+          <div className="category-name">Women's Dresses</div>
+        </button>
+
+        <button onClick={() => goToCategory('womens-jewellery')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-gem"></i></div>
+          <div className="category-name">Jewellery</div>
+        </button>
+
+        <button onClick={() => goToCategory('womens-shoes')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-shoe-prints"></i></div>
+          <div className="category-name">Women's Shoes</div>
+        </button>
+
+        <button onClick={() => goToCategory('womens-watches')} className="category-card">
+          <div className="category-icon"><i className="fa-solid fa-stopwatch"></i></div>
+          <div className="category-name">Women's Watches</div>
+        </button>
+
+      </div>
     </div>
   );
-}
+};
 
 export default Categories;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Footer.css';
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer-wrapper">
       <div className="footer-container">
@@ -55,6 +55,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

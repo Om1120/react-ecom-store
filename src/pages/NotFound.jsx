@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/NotFound.css';
 
-// this page shows when the user visits a URL that doesn't exist
-function NotFound() {
+const NotFound = () => {
   return (
     <div className="container">
       <div className="notfound-container">
@@ -18,6 +17,6 @@ function NotFound() {
       </div>
     </div>
   );
-}
+};
 
 export default NotFound;

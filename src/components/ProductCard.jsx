@@ -2,19 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Product.css';
 
-function ProductCard(props) {
+const ProductCard = ({ product, onAddToCart }) => {
+  const rating = product.rating ? product.rating.toFixed(1) : '4.5';
 
-  let product = props.product;
-
-  function handleAdd(e) {
+  const handleAdd = (e) => {
     e.preventDefault();
-    props.onAddToCart(product);
-  }
-
-  let rating = '4.5';
-  if (product.rating) {
-    rating = product.rating.toFixed(1);
-  }
+    onAddToCart(product);
+  };
 
   return (
     <div className="product-card">
@@ -43,6 +37,6 @@ function ProductCard(props) {
       </div>
     </div>
   );
-}
+};
 
 export default ProductCard;
